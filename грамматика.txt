@@ -1,0 +1,39 @@
+ÃÐÀÌÌÀÒÈÊÀ:
+
+LITERAL             -> 0|([-]?[1-9][0-9]*)
+WHILE_KW            -> while
+IF_KW               -> if
+ELSE_KW             -> else
+VAR_KW              -> var
+PRINT_KW            -> print
+
+ASSIGN_S            -> =
+MINUS_S             -> -
+PLUS_S              -> +
+MULT_S              -> *
+DIV_S               -> /
+BIGGER_S            -> >
+LESS_S              -> <
+EQUALS_S            -> ==
+NOT_S               -> !
+AND_S               -> &
+OR_S                -> |
+
+IDENTIFIER          -> [a-z]([0-9]|[a-z])*
+OPEN_ROUND_BRACKET  -> \\(
+CLOSE_ROUND_BRACKET -> \\)
+OPEN_CURLY_BRACKET  -> \\{
+CLOSE_CURLY_BRACKET -> \\}
+LITERAL             -> 0|([1-9][0-9]*)
+SEMICOLON           -> ;
+
+lang      -> (statement SEMICOLON)*
+statement -> var | while | assign | if | print | (OPEN_CURLY_BRACKET (statement SEMICOLON)* CLOSE_CURLY_BRACKET)
+operator  -> MINUS_S | PLUS_S | MULT_S | DIV_S | BIGGER_S | LESS_S | EQUALS_S | AND_S | OR_S | NOT_S
+expr      -> LITERAL | IDENTIFIER | (OPEN_ROUND_BRACKET expr CLOSE_ROUND_BRACKET) |
+             (expr operator expr) | (operator expr)
+var       -> VAR_KW IDENTIFIER
+while     -> WHILE_KW OPEN_ROUND_BRACKET expr CLOSE_ROUND_BRACKET statement
+assign    -> IDENTIFIER ASSIGN_S expr
+if_else   -> IF_WK OPEN_ROUND_BRACKET expr CLOSE_ROUND_BRACKET statement ELSE_KW statement
+print     -> PRINT_KW expr
